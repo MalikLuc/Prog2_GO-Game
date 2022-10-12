@@ -26,12 +26,16 @@ public class Main {
             // get the player's move
             System.out.print("Player " + player2.getColor() + "'s move: ");
             move = scanner.nextLine();
+            // check if move is "pass"
+            if(move.equals("pass")) {
+                // get the player's move
+                System.out.print("Player " + player1.getColor() + " passes ");
+            }
             // get the x and y coordinates
             x = Integer.parseInt(move.substring(0, 1));
             y = Integer.parseInt(move.substring(2, 3));
             // set the stone
             board.setStone(x, y, player2.getColor());
-            // initial
         }
     }
 }

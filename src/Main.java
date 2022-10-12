@@ -31,6 +31,7 @@ public class Main {
             y = Integer.parseInt(move.substring(2, 3));
             // set the stone
             board.setStone(x, y, player2.getColor());
+            // initial
         }
     }
 }

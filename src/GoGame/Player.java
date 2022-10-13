@@ -1,3 +1,5 @@
+package GoGame;
+
 // player in go game
 public class Player {
     // the player's color

@@ -1,3 +1,5 @@
+package GoGame;
+
 // the go game board
 public class GameBoard {
     // the board's size
@@ -27,23 +29,32 @@ public class GameBoard {
     }
     // prints the board
     public void printBoard() {
+
+
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder b = new StringBuilder();
+        b.append("\n");
+        b.append("  ");
         // print the top row
-        System.out.print("  ");
-        for(int i = 0; i < size; i++) {
-            System.out.print(i + " ");
+        for (int i = 0; i < size; i++) {
+            b.append(i + " ");
         }
-        System.out.println();
+        b.append("\n");
         // print the rest of the board
-        for(int i = 0; i < size; i++) {
-            System.out.print(i + " ");
-            for(int j = 0; j < size; j++) {
-                if(stones[i][j] == null) {
-                    System.out.print(". ");
+        for (int i = 0; i < size; i++) {
+            b.append(i + " ");
+            for (int j = 0; j < size; j++) {
+                if (stones[i][j] == null) {
+                    b.append(". ");
                 } else {
-                    System.out.print(stones[i][j].getColor() + " ");
+                    b.append(stones[i][j].getColor() + " ");
                 }
             }
-            System.out.println();
+            b.append("\n");
         }
+        return b.toString();
     }
 }

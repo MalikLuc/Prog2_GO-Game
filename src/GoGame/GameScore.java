@@ -1,3 +1,5 @@
+package GoGame;
+
 // score of the go game
 public class GameScore {
     // the score's black stones

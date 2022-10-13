@@ -1,3 +1,5 @@
+package GoGame;
+
 // go game stone
 public class Stone {
     // the stone's x coordinate

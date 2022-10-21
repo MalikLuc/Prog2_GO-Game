@@ -5,5 +5,4 @@ A 9x9 game board for quick games
 
 Turn based miltiplayer over tcp
 
-gogo
-gogo
+test

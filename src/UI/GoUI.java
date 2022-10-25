@@ -15,7 +15,7 @@ public class GoUI {
     private static final String SET = "set", SETSHORT = "s", SETDESC = "... set a piece";
     private Player player1;
     private String playerName;
-    //private final TicTacToeImpl gameEngine;
+    //private final GO! gameEngine;
     private final GameBoard gameBoard;
     private String partnerName;
 

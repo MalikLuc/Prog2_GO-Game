@@ -8,11 +8,11 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GoUI {
-    private static final String PRINT = "print";
-    private static final String EXIT = "exit";
-    private static final String CONNECT = "connect";
-    private static final String OPEN = "open";
-    private static final String SET = "set";
+    private static final String PRINT = "print", PRINTSHORT = "p", PRINTDESC = ".. print board";
+    private static final String EXIT = "exit", EXITSHORT = "e", EXITDESC = "... exit the game";
+    private static final String CONNECT = "connect", CONNECTSHORT = "c", CONNECTDESC = "... connect as a tcp client";
+    private static final String OPEN = "open", OPENSHORT = "o", OPENDESC = "... open port to become the tcp server";
+    private static final String SET = "set", SETSHORT = "s", SETDESC = "... set a piece";
     private Player player1;
     private String playerName;
     //private final TicTacToeImpl gameEngine;
@@ -48,19 +48,19 @@ public class GoUI {
         b.append("valid commands:");
         b.append("\n");
         b.append(CONNECT);
-        b.append(".. connect as tcp client");
+        b.append(CONNECTDESC);
         b.append("\n");
         b.append(OPEN);
-        b.append(".. open port become tcp server");
+        b.append(OPENDESC);
         b.append("\n");
         b.append(PRINT);
-        b.append(".. print board");
+        b.append(PRINTDESC);
         b.append("\n");
         b.append(SET);
-        b.append(".. set a piece");
+        b.append(SETDESC);
         b.append("\n");
         b.append(EXIT);
-        b.append(".. exit");
+        b.append(EXITDESC);
         b.append("\n");
 
         this.outStream.println(b.toString());
@@ -81,17 +81,22 @@ public class GoUI {
                 String command = tokens[0];
                 String arg1 = tokens.length > 1 ? tokens[1].trim() : null;
                 switch (command) {
+                    case PRINTSHORT:
                     case PRINT:
                         this.outStream.println(this.gameBoard.toString());
                         break;
+                    case EXITSHORT:
                     case EXIT:
                         return;
+                    case CONNECTSHORT:
                     case CONNECT:
                         this.connect(arg1);
                         break;
+                    case OPENSHORT:
                     case OPEN:
                         this.open();
                         break;
+                    case SETSHORT:
                     case SET:
                         this.set(arg1);
                         break;

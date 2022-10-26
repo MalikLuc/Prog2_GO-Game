@@ -4,8 +4,7 @@ import GoGame.GameBoard;
 import GoGame.Player;
 
 import java.io.*;
-import java.util.Random;
-import java.util.Scanner;
+
 
 public class GoUI {
     private static final String PRINT = "print", PRINTSHORT = "p", PRINTDESC = ".. print board";
@@ -26,7 +25,7 @@ public class GoUI {
         this.inBufferedReader = new BufferedReader(new InputStreamReader(is));
         this.outStream = os;
         this.printUsage();
-        this.gameBoard = new GameBoard();;
+        this.gameBoard = new GameBoard();
     }
 
     public static void main(String[] args) {
@@ -65,7 +64,7 @@ public class GoUI {
 
         this.outStream.println(b.toString());
     }
-
+    // TODO check if game is initialized before allowing to set stones
     public void commandLoop(){
         while (true) {
             this.outStream.print("<Enter command>: ");
@@ -112,6 +111,11 @@ public class GoUI {
     }
 
     private void set(String arguments) {
+        // check if the player is initialized
+        if (this.player1 == null){
+            this.outStream.println("You need to connect to the server first");
+            return;
+        }
         String errorMessage = "\nPlease enter a valid position\n";
         if (arguments == null) {
             this.outStream.println(errorMessage);
@@ -124,8 +128,7 @@ public class GoUI {
         }
         int x = Integer.parseInt(tokens[0]);
         int y = Integer.parseInt(tokens[1]);
-        int color = Integer.parseInt(tokens[2]);
-        this.gameBoard.setStone(x, y, color);
+        this.gameBoard.setStone(x, y, this.player1.getColor());
     }
 
     private void open() {

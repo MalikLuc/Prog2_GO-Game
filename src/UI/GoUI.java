@@ -70,15 +70,9 @@ public class GoUI {
             this.outStream.print("<Enter command>: ");
             try {
                 String line = inBufferedReader.readLine();
-                if (line == null) {
-                    break;
-                }
                 String[] tokens = line.split(" ");
-                if (tokens.length == 0) {
-                    continue;
-                }
                 String command = tokens[0];
-                String arg1 = tokens.length > 1 ? tokens[1].trim() : null;
+                String arg1 = (tokens.length == 2) ? tokens[1].trim() : null; //TODO wenn null dann passende exception werfen
                 switch (command) {
                     case PRINTSHORT:
                     case PRINT:

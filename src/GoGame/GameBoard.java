@@ -25,7 +25,7 @@ public class GameBoard {
     }
     // sets the board's stone
     public void setStone(int x, int y, int color) {
-        stones[x][y] = new Stone(x, y, color);
+        stones[x][y] =
     }
     // prints the board
     public void printBoard() {

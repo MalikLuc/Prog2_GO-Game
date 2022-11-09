@@ -4,6 +4,7 @@ import GoGame.GameBoard;
 import GoGame.Player;
 
 import java.io.*;
+import java.util.Random;
 
 
 public class GoUI {
@@ -12,18 +13,17 @@ public class GoUI {
     private static final String CONNECT = "connect", CONNECTSHORT = "c", CONNECTDESC = "... connect as a tcp client";
     private static final String OPEN = "open", OPENSHORT = "o", OPENDESC = "... open port to become the tcp server";
     private static final String SET = "set", SETSHORT = "s", SETDESC = "... set a piece";
-    private Player player1;
-    private String playerName;
-    //private final GO! gameEngine;
+    private Player player;
+    private Player enemy;
+    private boolean gameInitialized;
     private final GameBoard gameBoard;
-    private String partnerName;
-
     private final PrintStream outStream;
     private final BufferedReader inBufferedReader;
 
     public GoUI(PrintStream os, InputStream is) {
         this.inBufferedReader = new BufferedReader(new InputStreamReader(is));
         this.outStream = os;
+        this.gameInitialized = false;
         this.printUsage();
         this.gameBoard = new GameBoard();
     }
@@ -62,7 +62,7 @@ public class GoUI {
         b.append(EXITDESC);
         b.append("\n");
 
-        this.outStream.println(b.toString());
+        this.outStream.println(b);
     }
     // TODO check if game is initialized before allowing to set stones
     public void commandLoop(){
@@ -72,7 +72,7 @@ public class GoUI {
                 String line = inBufferedReader.readLine();
                 String[] tokens = line.split(" ");
                 String command = tokens[0];
-                String arg1 = (tokens.length == 2) ? tokens[1].trim() : null; //TODO wenn null dann passende exception werfen
+                String arg1 = tokens.length > 1 ? tokens[1].trim() : null;
                 switch (command) {
                     case PRINTSHORT:
                     case PRINT:
@@ -106,8 +106,8 @@ public class GoUI {
 
     private void set(String arguments) {
         // check if the player is initialized
-        if (this.player1 == null){
-            this.outStream.println("You need to connect to the server first");
+        if (this.gameInitialized){
+            this.outStream.println("You need to connect or open a server first");
             return;
         }
         String errorMessage = "\nPlease enter a valid position\n";
@@ -120,14 +120,23 @@ public class GoUI {
             this.outStream.println(errorMessage);
             return;
         }
-        int x = Integer.parseInt(tokens[0]);
-        int y = Integer.parseInt(tokens[1]);
-        this.gameBoard.setStone(x, y, this.player1.getColor());
+        try{
+            int x = Integer.parseInt(tokens[0]);
+            int y = Integer.parseInt(tokens[1]);
+            this.gameBoard.setStone(x, y, this.player.getColor());
+        } catch (NumberFormatException e){
+            this.outStream.println(errorMessage);
+        }
+
     }
 
     private void open() {
-        int port = 7000;
-        //this.gameEngine.open(port);
+        // generate a port number
+        int port = new Random().nextInt(7000);
+        // check if valid
+        if (port < 1024){
+            port += 1024;
+        }
         this.outStream.println("\nSuccessfully opened a game-server!\n" +
                 "Your Game-Code is: " + port + "\nYour opponent can connect to you by typing: connect " + port + "\n");
 

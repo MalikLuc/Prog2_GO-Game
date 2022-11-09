@@ -123,7 +123,7 @@ public class GoUI {
         try{
             int x = Integer.parseInt(tokens[0]);
             int y = Integer.parseInt(tokens[1]);
-            this.gameBoard.setStone(x, y, this.player.getColor());
+            //this.gameBoard.setStone(x, y, this.player.getColor());
         } catch (NumberFormatException e){
             this.outStream.println(errorMessage);
         }

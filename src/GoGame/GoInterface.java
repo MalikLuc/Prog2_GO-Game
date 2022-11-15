@@ -32,7 +32,7 @@ public interface GoInterface {
     /**
      * @return if active - can set a piece, false otherwise
      */
-    boolean isActive();
+    boolean isActive(); //throws StatusException{};
 
     /**
      * @return true if won, false otherwise

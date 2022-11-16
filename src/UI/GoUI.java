@@ -1,6 +1,7 @@
 package UI;
 
 import GoGame.GameBoard;
+import GoGame.GoGameImpl;
 import GoGame.Player;
 
 import java.io.*;
@@ -13,17 +14,15 @@ public class GoUI {
     private static final String CONNECT = "connect", CONNECTSHORT = "c", CONNECTDESC = "... connect as a tcp client";
     private static final String OPEN = "open", OPENSHORT = "o", OPENDESC = "... open port to become the tcp server";
     private static final String SET = "set", SETSHORT = "s", SETDESC = "... set a piece";
-    private Player player;
-    private Player enemy;
-    private boolean gameInitialized;
     private final GameBoard gameBoard;
     private final PrintStream outStream;
     private final BufferedReader inBufferedReader;
 
+    private GoGameImpl goGameImpl;
+
     public GoUI(PrintStream os, InputStream is) {
         this.inBufferedReader = new BufferedReader(new InputStreamReader(is));
         this.outStream = os;
-        this.gameInitialized = false;
         this.printUsage();
         this.gameBoard = new GameBoard();
     }
@@ -34,10 +33,6 @@ public class GoUI {
         GoUI goUI = new GoUI(System.out, System.in);
         // wait for user input
         goUI.commandLoop();
-    }
-
-    public void initializeGame(){
-
     }
 
     public void printUsage() {
@@ -106,7 +101,7 @@ public class GoUI {
 
     private void set(String arguments) {
         // check if the player is initialized
-        if (this.gameInitialized){
+        if (goGameImpl.isInitialized()){
             this.outStream.println("You need to connect or open a server first");
             return;
         }

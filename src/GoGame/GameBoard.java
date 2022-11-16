@@ -25,7 +25,7 @@ public class GameBoard {
     }
     // sets the board's stone
     public void setStone(int x, int y, int color) {
-        stones[x][y] =
+        stones[x][y] = Stone.values()[color];
     }
     // prints the board
     public void printBoard() {
@@ -50,7 +50,7 @@ public class GameBoard {
                 if (stones[i][j] == null) {
                     b.append(". ");
                 } else {
-                    b.append(stones[i][j].getColor() + " ");
+                    b.append(stones[i][j].toString() + " ");
                 }
             }
             b.append("\n");

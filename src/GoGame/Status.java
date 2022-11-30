@@ -1,6 +1,6 @@
 package GoGame;
 
 public enum Status {
-    PREGAME, CONNECTED, x_TURN, o_TURN, BLACK_WIN, WHITE_WIN
+    PREGAME, CONNECTED, x_TURN, o_TURN, x_WIN, o_WIN
 
 }

@@ -81,29 +81,7 @@ public class ExampleGames {
     }
 
     /**
-     * Bad Test 7 - Try setting a stone when it is not your turn
-     * @throws GameStateException
-     */
-    @Test
-    public void setStoneWhenNotYourTurn() throws GameStateException, PositionOutOfBoundsExeption, PositionNotEmptyException {
-        GoInterface goGame = getGoGameImpl();
-        goGame.setStatus(Status.o_TURN);
-        Assertions.assertThrows(GameStateException.class, () -> goGame.set(Stone.x, new Position(1, 1)));
-    }
-
-    /**
-     * Bad Test 8 - Try setting a stone when it's not your turn
-     * @throws GameStateException
-     */
-    @Test
-    public void setStoneWhenNotYourTurn2() throws GameStateException, PositionOutOfBoundsExeption, PositionNotEmptyException {
-        GoInterface goGame = getGoGameImpl();
-        goGame.setStatus(Status.x_TURN);
-        Assertions.assertThrows(GameStateException.class, () -> goGame.set(Stone.o, new Position(1, 1)));
-    }
-
-    /**
-     * Good Test 1 - Check the corners of the board
+     * Good Test 7 - Check the corners of the board
      * 1. Set stone in the top left corner
      * 2. Set stone in the top right corner
      * 3. Set stone in the bottom left corner
@@ -113,131 +91,103 @@ public class ExampleGames {
     public void setCorner() throws GameStateException, PositionOutOfBoundsExeption, PositionNotEmptyException {
         GoInterface goGame = getGoGameImpl();
         Assertions.assertFalse(goGame.set(Stone.x, new Position(0, 0)));
-        goGame.setStatus(Status.x_TURN);
         Assertions.assertFalse(goGame.set(Stone.x, new Position(0, 18)));
-        goGame.setStatus(Status.x_TURN);
         Assertions.assertFalse(goGame.set(Stone.x, new Position(18, 0)));
-        goGame.setStatus(Status.x_TURN);
         Assertions.assertFalse(goGame.set(Stone.x, new Position(18, 18)));
     }
 
     /**
-     * Good Test 2 - check if the return is true when five stones are set in a row
+     * Good Test 8 - check if the return is true when five stones are set in a row
      */
     @Test
     public void setFiveInRow() throws GameStateException, PositionOutOfBoundsExeption, PositionNotEmptyException {
         GoInterface goGame = getGoGameImpl();
         Assertions.assertFalse(goGame.set(Stone.x, new Position(0, 0)));
-        goGame.setStatus(Status.x_TURN);
         Assertions.assertFalse(goGame.set(Stone.x, new Position(0, 1)));
-        goGame.setStatus(Status.x_TURN);
         Assertions.assertFalse(goGame.set(Stone.x, new Position(0, 2)));
-        goGame.setStatus(Status.x_TURN);
         Assertions.assertFalse(goGame.set(Stone.x, new Position(0, 3)));
-        goGame.setStatus(Status.x_TURN);
         Assertions.assertTrue(goGame.set(Stone.x, new Position(0, 4)));
     }
 
     /**
-     * Good Test 3 - check that the return of has won is true when the game is over
+     * Good Test 9 - check that the return of has won is true when the game is over
      */
     @Test
     public void hasWon() throws GameStateException, PositionOutOfBoundsExeption, PositionNotEmptyException {
         GoInterface goGame = getGoGameImpl();
         Assertions.assertFalse(goGame.set(Stone.x, new Position(0, 0)));
-        goGame.setStatus(Status.x_TURN);
         Assertions.assertFalse(goGame.set(Stone.x, new Position(0, 1)));
-        goGame.setStatus(Status.x_TURN);
         Assertions.assertFalse(goGame.set(Stone.x, new Position(0, 2)));
-        goGame.setStatus(Status.x_TURN);
         Assertions.assertFalse(goGame.set(Stone.x, new Position(0, 3)));
-        goGame.setStatus(Status.x_TURN);
         Assertions.assertTrue(goGame.set(Stone.x, new Position(0, 4)));
         Assertions.assertTrue(goGame.hasWon());
     }
 
-
     /**
-     * Good Test 4 - check that the return of has won is false when the game is not over
+     * Good Test 10 - check that the return of has won is false when the game is not over
      */
     @Test
     public void hasWon2() throws GameStateException, PositionOutOfBoundsExeption, PositionNotEmptyException {
         GoInterface goGame = getGoGameImpl();
         Assertions.assertFalse(goGame.set(Stone.x, new Position(0, 0)));
-        Assertions.assertFalse(goGame.set(Stone.o, new Position(1, 0)));
         Assertions.assertFalse(goGame.set(Stone.x, new Position(0, 1)));
-        Assertions.assertFalse(goGame.set(Stone.o, new Position(1, 1)));
         Assertions.assertFalse(goGame.set(Stone.x, new Position(0, 2)));
-        Assertions.assertFalse(goGame.set(Stone.o, new Position(1, 2)));
         Assertions.assertFalse(goGame.set(Stone.x, new Position(0, 3)));
-        Assertions.assertFalse(goGame.set(Stone.o, new Position(1, 3)));
         Assertions.assertFalse(goGame.set(Stone.x, new Position(0, 4)));
         Assertions.assertFalse(goGame.hasWon());
     }
 
 /**
-     * Good Test 5 - check that the return of hasLost is true when the game has been lost
+     * Good Test 11 - check that the return of hasLost is true when the game has been lost
      */
     @Test
     public void hasLost() throws GameStateException, PositionOutOfBoundsExeption, PositionNotEmptyException {
         GoInterface goGameBlack = getGoGameImpl();
         GoInterface goGameWhite = getGoGameImpl();
         goGameWhite.setPlayer(Player.WHITE);
+        goGameBlack.setStatus(Status.x_TURN);
         Assertions.assertFalse(goGameBlack.set(Stone.x, new Position(0, 0)));
-        goGameBlack.setStatus(Status.x_TURN);
         Assertions.assertFalse(goGameBlack.set(Stone.x, new Position(0, 1)));
-        goGameBlack.setStatus(Status.x_TURN);
         Assertions.assertFalse(goGameBlack.set(Stone.x, new Position(0, 2)));
-        goGameBlack.setStatus(Status.x_TURN);
         Assertions.assertFalse(goGameBlack.set(Stone.x, new Position(0, 3)));
-        goGameBlack.setStatus(Status.x_TURN);
         Assertions.assertTrue(goGameBlack.set(Stone.x, new Position(0, 4)));
         Assertions.assertTrue(goGameWhite.hasLost());
-        Assertions.assertEquals(Status.x_WIN, goGameBlack.getStatus());
     }
 
     /**
-     * Good Test 6 - check that the return of hasLost is false when the game has not been lost
-     * also check that the gam state is not x_WIN
+     * Good Test 12 - check that the return of hasLost is false when the game has not been lost
      */
     @Test
     public void hasLost2() throws GameStateException, PositionOutOfBoundsExeption, PositionNotEmptyException {
         GoInterface goGameBlack = getGoGameImpl();
         GoInterface goGameWhite = getGoGameImpl();
         goGameWhite.setPlayer(Player.WHITE);
+        goGameBlack.setStatus(Status.x_TURN);
         Assertions.assertFalse(goGameBlack.set(Stone.x, new Position(0, 0)));
-        goGameBlack.setStatus(Status.x_TURN);
         Assertions.assertFalse(goGameBlack.set(Stone.x, new Position(0, 1)));
-        goGameBlack.setStatus(Status.x_TURN);
         Assertions.assertFalse(goGameBlack.set(Stone.x, new Position(0, 2)));
-        goGameBlack.setStatus(Status.x_TURN);
         Assertions.assertFalse(goGameBlack.set(Stone.x, new Position(0, 3)));
         Assertions.assertFalse(goGameWhite.hasLost());
-        Assertions.assertNotEquals(Status.x_WIN, goGameBlack.getStatus());
     }
 
-    /** Good Test 7 - Testing a complete game round
-     *
+
+    /** Testing a complete game round
+     * 1. PL1 chooses x
+     * 2. PL2 chooses o
+     * 3... set stones accordingly so that PL1 wins.
      */
     @Test
     public void setCompleteGame() throws GameStateException, PositionOutOfBoundsExeption, PositionNotEmptyException {
         GoInterface goGame = getGoGameImpl();
-        Assertions.assertFalse(goGame.set(Stone.x, new Position(1, 1)));
-        Assertions.assertFalse(goGame.set(Stone.o, new Position(1, 2)));
-        Assertions.assertFalse(goGame.set(Stone.x, new Position(2, 1)));
-        Assertions.assertFalse(goGame.set(Stone.o, new Position(2, 2)));
-        Assertions.assertFalse(goGame.set(Stone.x, new Position(3, 1)));
-        Assertions.assertFalse(goGame.set(Stone.o, new Position(3, 2)));
-        Assertions.assertFalse(goGame.set(Stone.x, new Position(4, 1)));
-        Assertions.assertFalse(goGame.set(Stone.o, new Position(4, 2)));
-        Assertions.assertFalse(goGame.set(Stone.x, new Position(5, 1)));
-        Assertions.assertFalse(goGame.set(Stone.o, new Position(5, 2)));
-        Assertions.assertFalse(goGame.set(Stone.x, new Position(6, 1)));
-        Assertions.assertFalse(goGame.set(Stone.o, new Position(6, 2)));
-        Assertions.assertFalse(goGame.set(Stone.x, new Position(7, 1)));
-        Assertions.assertFalse(goGame.set(Stone.o, new Position(7, 2)));
-        Assertions.assertFalse(goGame.set(Stone.x, new Position(8, 1)));
-        Assertions.assertFalse(goGame.set(Stone.o, new Position(8, 2)));
-        Assertions.assertTrue(goGame.set(Stone.o, new Position(1, 5)));
+        Assertions.assertTrue(goGame.set(Stone.x, new Position(1, 1)));
+        Assertions.assertTrue(goGame.set(Stone.o, new Position(1, 2)));
+        Assertions.assertTrue(goGame.set(Stone.x, new Position(2, 1)));
+        Assertions.assertTrue(goGame.set(Stone.o, new Position(2, 2)));
+        Assertions.assertTrue(goGame.set(Stone.x, new Position(3, 1)));
+        Assertions.assertTrue(goGame.set(Stone.o, new Position(3, 3)));
+        Assertions.assertTrue(goGame.set(Stone.x, new Position(4, 1)));
+        Assertions.assertTrue(goGame.set(Stone.o, new Position(4, 3)));
+        Assertions.assertTrue(goGame.set(Stone.x, new Position(5, 1)));
     }
+
 }

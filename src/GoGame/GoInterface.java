@@ -1,6 +1,7 @@
 package GoGame;
 
 /**
+ * @author:  <Yannick Kandulski, Yannik Zander, Can Wrobel>
  * The GoInterface class is the interface for the Go game.
  */
 public interface GoInterface {

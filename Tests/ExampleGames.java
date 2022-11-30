@@ -91,9 +91,9 @@ public class ExampleGames {
     public void setCorner() throws GameStateException, PositionOutOfBoundsExeption, PositionNotEmptyException {
         GoInterface goGame = getGoGameImpl();
         Assertions.assertFalse(goGame.set(Stone.x, new Position(0, 0)));
-        Assertions.assertFalse(goGame.set(Stone.x, new Position(0, 18)));
-        Assertions.assertFalse(goGame.set(Stone.x, new Position(18, 0)));
-        Assertions.assertFalse(goGame.set(Stone.x, new Position(18, 18)));
+        Assertions.assertFalse(goGame.set(Stone.x, new Position(0, 8)));
+        Assertions.assertFalse(goGame.set(Stone.x, new Position(8, 0)));
+        Assertions.assertFalse(goGame.set(Stone.x, new Position(8, 8)));
     }
 
     /**

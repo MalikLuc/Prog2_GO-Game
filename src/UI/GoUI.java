@@ -1,8 +1,9 @@
 package UI;
 
 import GoGame.GameBoard;
+import GoGame.GameStateException;
 import GoGame.GoGameImpl;
-import GoGame.Player;
+import GoGame.Status;
 
 import java.io.*;
 import java.util.Random;
@@ -95,13 +96,15 @@ public class GoUI {
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
+            } catch (GameStateException e) {
+                throw new RuntimeException(e);
             }
         }
     }
 
-    private void set(String arguments) {
+    private void set(String arguments) throws GameStateException {
         // check if the player is initialized
-        if (goGameImpl.isInitialized()){
+        if (goGameImpl.getStatus()!= Status.PREGAME) {
             this.outStream.println("You need to connect or open a server first");
             return;
         }

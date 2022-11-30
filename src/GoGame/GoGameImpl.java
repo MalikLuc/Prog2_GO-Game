@@ -2,19 +2,17 @@ package GoGame;
 
 public class GoGameImpl implements GoInterface{
 
-    private boolean isInitialized;
+    private Status status;
+    private Player player;
 
-    public GoGameImpl() {
-        this.isInitialized = false;
+    public GoGameImpl() throws GameStateException {
+        initializeGame();
     }
 
-    private void initializeGame(){
-        this.isInitialized = true;
-    }
-
-    public boolean isInitialized(){
-        return isInitialized;
-    }
+    public void initializeGame() throws GameStateException {
+        setStatus(Status.PREGAME);
+        setPlayer(Player.BLACK);
+        }
 
     @Override
     public boolean set(Stone stone, Position position) throws PositionNotEmptyException, PositionOutOfBoundsExeption, GameStateException {
@@ -27,8 +25,12 @@ public class GoGameImpl implements GoInterface{
     }
 
     @Override
-    public Status getStatus() throws GameStateException {
+    public Status getStatus(){
         return null;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override
@@ -45,4 +47,16 @@ public class GoGameImpl implements GoInterface{
     public boolean hasLost() {
         return false;
     }
+
+    @Override
+    public Player getPlayer() {
+        return player;
+    }
+
+    @Override
+    public void setPlayer(Player player) throws GameStateException {
+
+    }
+
+
 }
